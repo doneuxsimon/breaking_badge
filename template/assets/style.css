@@ -7,14 +7,21 @@ h1 {
     font-family: 'Texturina', serif;
     margin-top: 10%;
 }
+h2{
+    text-align: center;
+    color: ghostwhite;
+    font-family: 'Texturina', serif;
+
+}
 form {
     display: flex;
     flex-direction: column;
     text-align: center;
 }
 input {
-    width: 15%;
+    width: 120px;
 align-self: center;
+flex-direction: row;
 }
 a:hover {
     color: dodgerblue;

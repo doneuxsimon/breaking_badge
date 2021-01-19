@@ -16,12 +16,5 @@
 <body>
   <h1>Welcome to BeeKaud</h1>
   <?php include_once('components/router.php'); ?>
-  <form action="" method="get">
-    <input type="text">Username
-    <input type="email" name="" id="">
-    <input type="hidden" name="">Password
-    <p>You don't have an account yet ?</p>
-    <a href="./signin.php">Sign in here !</a>
-    </form>
 </body>
 </html>
