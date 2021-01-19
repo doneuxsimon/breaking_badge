@@ -1,0 +1,22 @@
+body {
+    background-color: lightgray;
+}
+h1 {
+    text-align: center;
+    color: white;
+    font-family: 'Texturina', serif;
+    margin-top: 10%;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+input {
+    width: 15%;
+align-self: center;
+}
+a:hover {
+    color: dodgerblue;
+    transform: scale(1.25);
+}
