@@ -14,7 +14,6 @@
   <title>Breaking Badge</title>
 </head>
 <body>
-  <h1>Welcome to BeeKaud</h1>
   <?php include_once('components/router.php'); ?>
 </body>
 </html>
