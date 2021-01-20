@@ -23,14 +23,14 @@ if (!empty($_POST['mail']) && !empty($_POST['pwd'])) {
     }
 } else {
 ?>
-
+<h1>Welcome to myBeeKaud</h1>
 <form action="" method="POST">
     <p>
-        <label for="mail"> Email : </label>
+        <label for="mail"> Email </label>
         <input type="email" id="mail" name="mail">
     </p>
     <p>
-        <label for="pwd"> Password : </label>
+        <label for="pwd"> Password </label>
         <input type="password" id="pwd" name="pwd">
     </p>
     <input type="submit" value="Log in">

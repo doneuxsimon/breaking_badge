@@ -17,12 +17,14 @@ form {
     display: flex;
     flex-direction: column;
     text-align: center;
+    color: red;
 }
 input {
-    width: 120px;
-align-self: center;
-flex-direction: row;
-}
+    display: flex;
+    width: 10%;
+    flex-direction: row;
+    color: gold;
+    margin-left: 45%;}
 a:hover {
     color: dodgerblue;
     transform: scale(1.25);
