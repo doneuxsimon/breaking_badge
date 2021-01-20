@@ -18,21 +18,30 @@ h2{
     width: 300px;
     border-radius: 62px;
     background: #28a6dc;
-    box-shadow:  18px 18px 29px #1e7ea7,
-                 -18px -18px 29px #32ceff;}
+    box-shadow:  18px 18px 29px #1e7ea7, -18px -18px 29px #32ceff;
+    margin-left: 40%;
+    margin-top: 10%;
+}
 form {
     display: flex;
     flex-direction: column;
     text-align: center;
-    color: red;
+    color: whitesmoke;
+}
+p {
+    margin: 5px;
 }
 input {
     display: flex;
-    width: 10%;
+    width: 30%;
     flex-direction: row;
     color: gold;
-    margin-left: 45%;
+    margin-left: 35%;
     justify-content: center;
+}
+
+input #login{
+    margin-bottom: 5px;
 }
 a:hover {
     color: dodgerblue;

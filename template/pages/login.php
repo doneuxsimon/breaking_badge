@@ -34,7 +34,7 @@ if (!empty($_POST['mail']) && !empty($_POST['pwd'])) {
         <label for="pwd"> Password </label>
         <input type="password" id="pwd" name="pwd">
     </p>
-    <input type="submit" value="Log in">
+    <input type="submit" value="Log in" name="login">
 </form>
 </div>
 <?php } ?>
