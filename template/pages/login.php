@@ -23,6 +23,7 @@ if (!empty($_POST['mail']) && !empty($_POST['pwd'])) {
     }
 } else {
 ?>
+<div class="loginNeu">
 <h1>Welcome to myBeeKaud</h1>
 <form action="" method="POST">
     <p>
@@ -35,4 +36,5 @@ if (!empty($_POST['mail']) && !empty($_POST['pwd'])) {
     </p>
     <input type="submit" value="Log in">
 </form>
+</div>
 <?php } ?>

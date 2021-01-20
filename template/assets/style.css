@@ -1,5 +1,6 @@
 body {
     background-color: lightgray;
+    justify-content: center;
 }
 h1 {
     text-align: center;
@@ -13,6 +14,12 @@ h2{
     font-family: 'Texturina', serif;
 
 }
+.loginNeu{
+    width: 300px;
+    border-radius: 62px;
+    background: #28a6dc;
+    box-shadow:  18px 18px 29px #1e7ea7,
+                 -18px -18px 29px #32ceff;}
 form {
     display: flex;
     flex-direction: column;
@@ -24,7 +31,9 @@ input {
     width: 10%;
     flex-direction: row;
     color: gold;
-    margin-left: 45%;}
+    margin-left: 45%;
+    justify-content: center;
+}
 a:hover {
     color: dodgerblue;
     transform: scale(1.25);

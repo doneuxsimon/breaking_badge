@@ -5,7 +5,7 @@
         echo $response;
     }
 ?>
-
+<div class ="signinNeu">
 <form method="POST">
     <p>
         <label for="firstname"> Firstname : </label>
@@ -36,3 +36,4 @@
     </p>
     <input type="submit" value="Sign in !">
 </form>
+</div>
