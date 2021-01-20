@@ -24,17 +24,17 @@ if (!empty($_POST['mail']) && !empty($_POST['pwd'])) {
 } else {
 ?>
 <div class="loginNeu">
-<h1>Welcome to myBeeKaud</h1>
+<div class="loginWelcome">Welcome to my Beekaud</div>
 <form action="" method="POST">
-    <p>
-        <label for="mail"> Email </label>
-        <input type="email" id="mail" name="mail">
+    <p class="field">
+        <label for="mail"></label>
+        <input type="email" id="mail" name="mail" placeholder="Email">
     </p>
-    <p>
-        <label for="pwd"> Password </label>
-        <input type="password" id="pwd" name="pwd">
+    <p class="field">
+        <label for="pwd"></label>
+        <input type="password" id="pwd" name="pwd" placeholder="Password">
     </p>
-    <input type="submit" value="Log in" name="login">
+    <button>Log In</button>
 </form>
 </div>
 <?php } ?>
