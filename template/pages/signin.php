@@ -1,7 +1,7 @@
 <?php
-    require_once('./components/functions.php');
-    if (!empty($_POST['firstname']) && !empty($_POST['lastname']) && !empty($_POST['mail']) && !empty($_POST['pwd'])) {
-        $response = addUsers($_POST['firstname'], $_POST['lastname'], $_POST['mail'], $_POST['pwd']);
+    require_once('../components/functions.php');
+    if (!empty($_POST['firstname']) && !empty($_POST['lastname']) && !empty($_POST['mail']) && !empty($_POST['pwd']) && !empty($_POST['account_type'])) {
+        $response = addUsers($_POST['firstname'], $_POST['lastname'], $_POST['mail'], $_POST['account_type'], $_POST['pwd']);
         echo $response;
     }
 ?>

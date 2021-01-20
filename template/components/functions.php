@@ -28,14 +28,21 @@
     $query->execute([$email]);
     $results = $query->fetch();
     
+    if (password_verify("breaking", $results['pwd'])) {
+      $_SESSION['user_id'] = $results['id'];
+      $_SESSION['account_type'] = $results['account_type'];
+      $_SESSION['email'] = $email;
+      return "ChangePwd";
+    }
+
     if(password_verify($password, $results['pwd'])){
       $_SESSION['user_id'] = $results['id'];
       $_SESSION['account_type'] = $results['account_type'];
       $_SESSION['email'] = $email;
 
-      return true;
+      return "PwdOk";
     }
-    return false;
+    return "LoginNotOk";
   }
 
   function logout(){
@@ -82,19 +89,32 @@
   function addUsers($firstname, $lastname, $mail, $account, $pwd) {
     $pwd = password_hash($pwd, PASSWORD_DEFAULT);
     $db = createCursor();
-    try {
+    $req = $db->prepare("SELECT EXISTS(SELECT mail FROM users WHERE  mail = ?)");
+    $req->execute([
+        $_POST[$mail]
+      ]);
+    $result = $req->fetchColumn();
+    $req->closeCursor();
+    if (!$result) {
       $req = $db->prepare('INSERT INTO users(firstname, lastname, mail, pwd, account_type) VALUES(?, ?, ?, ?, ?)');
       $req->execute([
         $firstname,
         $lastname,
         $mail,
-        $account,
-        $pwd
+        $pwd,
+        $account
       ]);
-    } catch (Exception $e) {
-      echo "This email adress is already used !";
-    } 
-}
+    }
+  }
+
+  function updatePwd($userId, $pwd) {
+    $db = createCursor();
+    $req = $db->prepare('UPDATE users SET pwd = ? WHERE id = ?');
+    $req->execute([
+      password_hash($pwd, PASSWORD_DEFAULT),
+      $userId
+    ]);
+  }
 
   function createBadge($name, $description, $shape){
     $db = createCursor();

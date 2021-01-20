@@ -6,6 +6,7 @@
   $routes['badges'] = 'All badges';
   $routes['students'] = 'All students';
   $routes['signin'] = "Sign In";
+  $routes['logout'] = "Log out";
   if (isset($_GET['p'])) {
     $requestedPage = $_GET['p'];
   }
