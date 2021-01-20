@@ -1,28 +1,38 @@
 <?php
-    session_start();
+    require_once('../components/functions.php');
+    if (!empty($_POST['firstname']) && !empty($_POST['lastname']) && !empty($_POST['mail']) && !empty($_POST['pwd']) && !empty($_POST['account_type'])) {
+        $response = addUsers($_POST['firstname'], $_POST['lastname'], $_POST['mail'], $_POST['account_type'], $_POST['pwd']);
+        echo $response;
+    }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../assets/style.css">
-  <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Texturina:wght@500&display=swap" rel="stylesheet">
-   <title>Sign In !</title>
-</head>
-<body>
-    <h1>It seems like you're not a member of my BeeKaud yet...</h1>
-    <h2>Please, fill the blanks below to claim your access :</h2>
-    <form action="" method="get" class="signInForm">
-    <input type="text">First name
-    <input type="text">Last name
-    <input type="email">Your email
-    <input type="password">Password
-    <input type="password">Confirm your password
-    <input type="button" value=""> Submit
-    </form>
-</body>
-</html>
+<form method="POST">
+    <p>
+        <label for="firstname"> Firstname : </label>
+        <input type="text" id="firstname" name="firstname">
+    </p>
+    <p>
+        <label for="lastname"> Lastname : </label>
+        <input type="text" id="lastname" name="lastname">
+    </p>
+    <p>
+        <label for="mail"> Email : </label>
+        <input type="email" id="mail" name="mail">
+    </p>
+    <p>
+        <label for="account">Account type :</label>
+        <select name="account_type" id="account">
+            <option value="NORMIE">NORMIE</option>
+            <option value="ADMIN">ADMIN</option>
+        </select>
+    </p>
+    <p>
+        <label for="pwd"> Password : </label>
+        <input type="password" id="pwd" name="pwd">
+    </p>
+    <p>
+        <label for="pw2"> Password : </label>
+        <input type="password" id="pw2" name="pw2">
+    </p>
+    <input type="submit" value="Sign in !">
+</form>
