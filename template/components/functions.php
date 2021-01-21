@@ -66,6 +66,15 @@
     return $students;
   }
 
+  function getStudentById($userId) {
+    $db = createCursor();
+    $student = $db->prepare('SELECT id,firstname, lastname, mail FROM users WHERE account_type = "NORMIE" AND id = ?');
+    $student->execute([ $userId ]);
+    $result = $student->fetch();
+
+    return $result;
+  }
+
   function addUsers($firstname, $lastname, $mail, $account, $pwd = "breaking") {
     $pwd = password_hash($pwd, PASSWORD_DEFAULT);
     $db = createCursor();
@@ -98,16 +107,21 @@
 
   function getBadges(){
     $db = createCursor();
-    $badges = $db->query('SELECT b.id, b.name, b.description, b.shape, ANY_VALUE(l.level) FROM badges AS b 
-    INNER JOIN users_has_badges ON b.id = users_has_badges.fk_badges_id 
-      INNER JOIN levels AS l
-      ON l.id = users_has_badges.fk_levels_id
-      GROUP BY b.id');
+    $badges = $db->query('SELECT id, name, description, shape FROM badges GROUP BY id');
 
     return $badges;
   }
 
-  function getBadgesByName() {
+  function getBadgeById($badgeId) {
+    $db = createCursor();
+    $req = $db->prepare('SELECT id, name, description, shape FROM badges WHERE id = ?');
+    $req->execute([ $badgeId ]);
+    $badge = $req->fetch();
+
+    return $badge;
+  }
+
+  function getBadgesByName() { // Why ?
     $db = createCursor();
     $badges = $db->query('SELECT name, description, shape FROM badges GROUP BY id');
 
@@ -116,7 +130,7 @@
 
   function getBadgesByUser($userId) {
     $db = createCursor();
-    $badgesUser = $db->prepare('SELECT b.name AS badge, b.description AS description, b.shape AS shape,
+    $badgesUser = $db->prepare('SELECT b.id AS badgeId, b.name AS badge, b.description AS description, b.shape AS shape,
     users.firstname AS firstname, users.lastname AS lastname, l.level AS level
     FROM badges AS b
     INNER JOIN users_has_badges
@@ -133,21 +147,24 @@
 
   function createBadge($name, $description, $shape){
     $db = createCursor();
-    $req = $db->prepare('INSERT INTO badges(name, description, shape) VALUES(?, ?, ?)');
-    $affectedLines = $req->execute([
-      $name,
-      $description,
-      $shape
-    ]);
+    try {
+      $req = $db->prepare('INSERT INTO badges(name, description, shape) VALUES(?, ?, ?)');
+      $affectedLines = $req->execute([
+        $name,
+        $description,
+        $shape
+      ]);
+      return $affectedLines;
+    } catch (Exception $e) {
+      echo "This badge already exists !";
+    }
 
-    return $affectedLines;
   }
 
-  function editBadge($badge_id, $name, $description, $shape){
+  function editBadge($badge_id, $description, $shape){
     $db = createCursor();
-    $req = $db->prepare('UPDATE badges SET name = ?, description = ?, shape = ? WHERE id = ?');
+    $req = $db->prepare('UPDATE badges SET description = ?, shape = ? WHERE id = ?');
     $affectedLines = $req->execute([
-      $name,
       $description,
       $shape,
       $badge_id
@@ -177,7 +194,6 @@
     ]);
 
     return $affectedLines;
-
   }
 
   function removeBadgeFromUser($badge_id, $user_id){
@@ -189,5 +205,19 @@
     ]);
 
     return $affectedLines;
+  }
+
+  function getLevels() {
+    $db = createCursor();
+    $levels = $req = $db->query('SELECT id, level FROM levels');
+
+    return $levels;
+  }
+
+  function averageBadges() {
+    $db = createCursor();
+    $req = $db->query('SELECT SUM(fk_users_id) FROM users_has_badges GROUP BY fk_badges_id');
+    $average = $req->fetch();
+    return $average;
   }
 ?>
