@@ -7,25 +7,25 @@
 ?>
 <div class ="signinNeu">
 <form method="POST">
-    <p>
-        <label for="firstname"> Firstname : </label>
-        <input type="text" id="firstname" name="firstname">
+    <p class="field">
+        <label for="firstname"></label>
+        <input type="text" id="firstname" name="firstname" placeholder="First name">
     </p>
-    <p>
-        <label for="lastname"> Lastname : </label>
-        <input type="text" id="lastname" name="lastname">
+    <p class="field">
+        <label for="lastname"></label>
+        <input type="text" id="lastname" name="lastname" placeholder="Last name">
     </p>
-    <p>
-        <label for="mail"> Email : </label>
-        <input type="email" id="mail" name="mail">
+    <p class="field">
+        <label for="mail"></label>
+        <input type="email" id="mail" name="mail" placeholder="Email">
     </p>
-    <p>
-        <label for="account">Account type :</label>
+    <p class="field">
+        <label for="account"></label>
         <select name="account_type" id="account">
             <option value="NORMIE">NORMIE</option>
             <option value="ADMIN">ADMIN</option>
         </select>
     </p>
-    <input type="submit" value="Sign in !">
+    <button type="submit"> Sign In ! </button>
 </form>
 </div>
