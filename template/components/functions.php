@@ -24,23 +24,25 @@
     session_start_once();
 
     $cursor = createCursor();
-    $query = $cursor->prepare('SELECT id, pwd, account_type from users WHERE mail=?');
+    $query = $cursor->prepare('SELECT id, firstname, pwd, account_type from users WHERE mail=?');
     $query->execute([$email]);
     $results = $query->fetch();
     
-    if (password_verify("breaking", $results['pwd'])) {
-      $_SESSION['user_id'] = $results['id'];
-      $_SESSION['account_type'] = $results['account_type'];
-      $_SESSION['email'] = $email;
-      return "ChangePwd";
-    }
-
     if(password_verify($password, $results['pwd'])){
-      $_SESSION['user_id'] = $results['id'];
-      $_SESSION['account_type'] = $results['account_type'];
-      $_SESSION['email'] = $email;
-      
-      return "PwdOk";
+      if ($password === "breaking") {
+        $_SESSION['user_id'] = $results['id'];
+        $_SESSION['firstname'] = $results['firstname'];
+        $_SESSION['account_type'] = $results['account_type'];
+        $_SESSION['email'] = $email;
+        return "ChangePwd";
+      } else {
+        $_SESSION['user_id'] = $results['id'];
+        $_SESSION['firstname'] = $results['firstname'];
+        $_SESSION['account_type'] = $results['account_type'];
+        $_SESSION['email'] = $email;
+
+        return "PwdOk";
+      }
     }
     return "LoginNotOk";
   }
