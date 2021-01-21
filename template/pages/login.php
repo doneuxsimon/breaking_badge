@@ -2,7 +2,7 @@
 require_once('./components/functions.php');
 if (!empty($_POST['mail']) && !empty($_POST['pwd'])) {
     if (login($_POST['mail'], $_POST['pwd']) == "PwdOk") {
-        header('Location: index.php');
+        header('Location: index.php?p=dashboard');
     } else if (login($_POST['mail'], $_POST['pwd']) == "ChangePwd") {
         ?>
         <form action="./components/newPwd.php" method="POST">

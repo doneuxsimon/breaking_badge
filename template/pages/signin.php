@@ -1,7 +1,7 @@
 <?php
-    require_once('../components/functions.php');
-    if (!empty($_POST['firstname']) && !empty($_POST['lastname']) && !empty($_POST['mail']) && !empty($_POST['pwd']) && !empty($_POST['account_type'])) {
-        $response = addUsers($_POST['firstname'], $_POST['lastname'], $_POST['mail'], $_POST['account_type'], $_POST['pwd']);
+    require_once('./components/functions.php');
+    if (!empty($_POST['firstname']) && !empty($_POST['lastname']) && !empty($_POST['mail']) && !empty($_POST['account_type'])) {
+        $response = addUsers($_POST['firstname'], $_POST['lastname'], $_POST['mail'], $_POST['account_type']);
         echo $response;
     }
 ?>
@@ -25,14 +25,6 @@
             <option value="NORMIE">NORMIE</option>
             <option value="ADMIN">ADMIN</option>
         </select>
-    </p>
-    <p>
-        <label for="pwd"> Password : </label>
-        <input type="password" id="pwd" name="pwd">
-    </p>
-    <p>
-        <label for="pw2"> Password : </label>
-        <input type="password" id="pw2" name="pw2">
     </p>
     <input type="submit" value="Sign in !">
 </form>

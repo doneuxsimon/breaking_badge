@@ -17,7 +17,7 @@
 
   function isAdmin(){
     session_start_once();
-    return isAuthenticated && $_SESSION['account_type'] == 'ADMIN';
+    return isAuthenticated() && $_SESSION['account_type'] == 'ADMIN';
   }
 
   function login($email, $password){
@@ -52,28 +52,6 @@
     session_destroy();
   }
 
-  function getBadges(){
-    $db = createCursor();
-    $badges = $db->query('SELECT name, description, shape FROM badges');
-
-    return $badges;
-  }
-
-  function getBadgesByUser($userId) {
-    $db = createCursor();
-    $badgesUser = $db->prepare('SELECT b.name AS badge, b.description AS description, b.shape AS shape,
-    users.firstname, users.lastname
-    FROM badges AS b
-    INNER JOIN users_has_badges
-    ON b.id = users_has_badges.fk_badges_id
-      INNER JOIN users
-      ON users.id = users_has_badges.fk_users_id
-    WHERE users.id = ?');
-    $badgesUser->execute([ $userId ]);
-
-    return $badgesUser;
-  }
-
   function getUsers(){
     $db = createCursor();
     $users = $db->query('SELECT firstname, lastname, mail FROM users');
@@ -83,17 +61,17 @@
 
   function getStudents() {
     $db = createCursor();
-    $students = $db->query('SELECT firstname, lastname, mail FROM users WHERE account_type = "NORMIE"');
+    $students = $db->query('SELECT id,firstname, lastname, mail FROM users WHERE account_type = "NORMIE"');
 
     return $students;
   }
 
-  function addUsers($firstname, $lastname, $mail, $account, $pwd) {
+  function addUsers($firstname, $lastname, $mail, $account, $pwd = "breaking") {
     $pwd = password_hash($pwd, PASSWORD_DEFAULT);
     $db = createCursor();
     $req = $db->prepare("SELECT EXISTS(SELECT mail FROM users WHERE  mail = ?)");
     $req->execute([
-        $_POST[$mail]
+      $mail
       ]);
     $result = $req->fetchColumn();
     $req->closeCursor();
@@ -118,9 +96,44 @@
     ]);
   }
 
+  function getBadges(){
+    $db = createCursor();
+    $badges = $db->query('SELECT b.id, b.name, b.description, b.shape, ANY_VALUE(l.level) FROM badges AS b 
+    INNER JOIN users_has_badges ON b.id = users_has_badges.fk_badges_id 
+      INNER JOIN levels AS l
+      ON l.id = users_has_badges.fk_levels_id
+      GROUP BY b.id');
+
+    return $badges;
+  }
+
+  function getBadgesByName() {
+    $db = createCursor();
+    $badges = $db->query('SELECT name, description, shape FROM badges GROUP BY id');
+
+    return $badges;
+  }
+
+  function getBadgesByUser($userId) {
+    $db = createCursor();
+    $badgesUser = $db->prepare('SELECT b.name AS badge, b.description AS description, b.shape AS shape,
+    users.firstname AS firstname, users.lastname AS lastname, l.level AS level
+    FROM badges AS b
+    INNER JOIN users_has_badges
+    ON b.id = users_has_badges.fk_badges_id
+      INNER JOIN users
+      ON users.id = users_has_badges.fk_users_id
+        INNER JOIN levels AS l
+        ON l.id = users_has_badges.fk_levels_id
+    WHERE users.id = ? AND users.account_type = "NORMIE"');
+    $badgesUser->execute([ $userId ]);
+
+    return $badgesUser;
+  }
+
   function createBadge($name, $description, $shape){
     $db = createCursor();
-    $req = $db->prepare('INSERT INTO badges(name, description, shape) VALUES(?, ?, ?, ?)');
+    $req = $db->prepare('INSERT INTO badges(name, description, shape) VALUES(?, ?, ?)');
     $affectedLines = $req->execute([
       $name,
       $description,
@@ -154,12 +167,13 @@
 
   }
 
-  function grantBadgeToUser($badge_id, $user_id){
+  function grantBadgeToUser($badge_id, $user_id, $levelId){
     $db = createCursor();
-    $req = $db->prepare('INSERT INTO users_has_badges(fk_badges_id, fk_users_id) VALUES(?, ?)');
+    $req = $db->prepare('INSERT INTO users_has_badges(fk_badges_id, fk_users_id, fk_levels_id) VALUES(?, ?, ?)');
     $affectedLines = $req->execute([
       $badge_id,
-      $user_id
+      $user_id,
+      $levelId
     ]);
 
     return $affectedLines;
