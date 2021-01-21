@@ -214,10 +214,19 @@
     return $levels;
   }
 
-  function averageBadges() {
+  function averageBadge($badgeId) {
     $db = createCursor();
-    $req = $db->query('SELECT SUM(fk_users_id) FROM users_has_badges GROUP BY fk_badges_id');
-    $average = $req->fetch();
+    $req = $db->prepare('SELECT COUNT(fk_badges_id) AS count FROM users_has_badges WHERE fk_badges_id = ?');
+    $req->execute([ $badgeId ]);
+    $data = $req->fetch();
+    $countBadge = $data['count'];
+    $req->closeCursor();
+
+    $req = $db->query('SELECT COUNT(id) AS user FROM users WHERE account_type = "NORMIE"');
+    $data = $req->fetch();
+    $countUsers = $data['user'];
+    $average = ($countBadge / $countUsers) * 100;
+
     return $average;
-  }
+}
 ?>
