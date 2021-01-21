@@ -20,6 +20,22 @@ if (!empty($_POST['mail']) && !empty($_POST['pwd'])) {
     }
     else {
         echo "Wrong email or password!";
+        ?>
+        <div class="loginNeu">
+        <div class="loginWelcome">Welcome to my Beekaud</div>
+        <form action="" method="POST">
+            <p class="field">
+                <label for="mail"></label>
+                <input type="email" id="mail" name="mail" placeholder="Email">
+            </p>
+            <p class="field">
+                <label for="pwd"></label>
+                <input type="password" id="pwd" name="pwd" placeholder="Password">
+            </p>
+            <button type="submit">Log In</button>
+        </form>
+        </div>
+        <?php
     }
 } else {
 ?>

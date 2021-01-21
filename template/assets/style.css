@@ -71,6 +71,41 @@ button{
     box-shadow: 2px 2px 5px #babbec, -5px -5px 10px #ffffff73;
 }
 button:focus{
-    color: dodgerblue;
+    color: red;
     box-shadow: 2px 2px 5px #babbec, -5px -5px 10px #ffffff73;
 }
+
+/* Navbar CI-Dessous*/
+nav {
+    width: 90%;
+    background: #dde1e7;
+    border-radius: 10px;
+    padding: 40px 30px;
+    box-shadow: -3px -3px 7px white, 2px 2px 5px rgba(94, 104, 121, 0.288);
+}
+ul {
+    display: flex;
+    flex-direction: row;
+}
+li{
+    height: 100%;
+    width: 100%;
+    font-size: 18px;
+    outline: none;
+    border: none;
+    color: #595959;
+    background: #e7e9ed;
+    border-radius: 25px;
+    box-shadow: inset 2px 2px 5px #babbec, inset -1px -1px 2px #ffffff73;
+    list-style-type: none;
+    margin-right: 15px;
+}
+ li:focus {
+    box-shadow: inset 2px 2px 5px #babbec, inset -1px -1px 2px #ffffff73;
+}
+li:hover {
+    color: rgb(255, 255, 255);
+	transition: transform .2s;
+	-ms-transform:scale(1.25); 
+	/* IE 9 /     -webkit-transform: scale(1.25); / Safari 3-8 */
+	transform: scale(1.25); }
