@@ -5,7 +5,7 @@ if (!empty($_POST['mail']) && !empty($_POST['pwd'])) {
         header('Location: index.php');
     } else if (login($_POST['mail'], $_POST['pwd']) == "ChangePwd") {
         ?>
-        <form action="../components/newPwd.php" method="POST">
+        <form action="./components/newPwd.php" method="POST">
             <p>
                 <label for="newPwd"> Choose a new password : </label>
                 <input type="password" id="newPwd" name="newPwd">
