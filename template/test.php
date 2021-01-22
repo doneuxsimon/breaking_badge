@@ -43,6 +43,9 @@
 <body>
 <section>
     <?php
+    require_once('components/functions.php');
+    $badges = getBadges()->fetchAll(PDO::FETCH_ASSOC);
+    $levels = getLevels()->fetchAll(PDO::FETCH_ASSOC);
         foreach($badges as $badge) {
             // foreach($levels as $level) {
                 $percent = generateBarres(averageBadge($badge['id']), averageLevelByBadge($badge['id'], 1), averageLevelByBadge($badge['id'], 2), averageLevelByBadge($badge['id'], 3), averageLevelByBadge($badge['id'], 4));
