@@ -1,4 +1,4 @@
-* {
+  * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -171,12 +171,11 @@ a, a:visited {
     z-index: 10;
       border-radius: 30%;
     box-shadow: 8px 8px 8px 2px rgba(0, 0, 0, 0.23);
-    
+  }    
     i.fab {
-      font-size: 2.6em;
-          margin-top: 16px;
+    font-size: 2.6em;
+    margin-top: 16px;
     }
-  }
   
   /* Colors */
   .blue {
@@ -233,4 +232,14 @@ a, a:visited {
     background: gainsboro;
     color: orangered;
   }
+  .svg-inline--fa.fa-w-12 {
+    width: 2.75em;
+}
+.svg-inline--fa {
+    display: inline-block;
+    font-size: inherit;
+    height: 4.5em;
+    overflow: visible;
+    vertical-align: -.125em;
+}
   
