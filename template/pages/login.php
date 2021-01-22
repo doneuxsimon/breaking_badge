@@ -50,7 +50,7 @@ if (!empty($_POST['mail']) && !empty($_POST['pwd'])) {
         <label for="pwd"></label>
         <input type="password" id="pwd" name="pwd" placeholder="Password">
     </p>
-    <button type="submit">Log In</button>
+    <button class="log" type="submit">Log In</button>
 </form>
 </div>
 <?php } ?>

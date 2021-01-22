@@ -36,8 +36,8 @@ if (isAdmin()) {
         }
     }
     ?>
-    <button>Add a badge</button>
-    <form action="./components/addBadge.php" method="POST">
+    <button id="addBadge">Add a badge</button>
+    <form action="./components/addBadge.php" method="POST" class="none" id="addBadgeForm">
         <label for="badgeName">Badge name : </label>
         <input type="text" id="badgeName" name="badgeName">
         <label for="badgeDescription">Badge description : </label>
@@ -51,8 +51,8 @@ if (isAdmin()) {
     <?php
     $badges = getBadges();
     ?>
-    <button>Edit a badge</button>
-    <form action="./components/editBadge.php" method="POST">
+    <button id="editBadge">Edit a badge</button>
+    <form action="./components/editBadge.php" method="POST" class="none" id="editBadgeForm">
         <label for="badgeName">Badge name : </label>
         <select name="badge" id="badgeName">
         <?php
@@ -74,8 +74,8 @@ if (isAdmin()) {
     <?php
     $badges = getBadges();
     ?>
-    <button>Remove a badge</button>
-    <form action="./components/removeBadge.php" method="POST">
+    <button id="removeBadge">Remove a badge</button>
+    <form action="./components/removeBadge.php" method="POST" class="none" id="removeBadgeForm">
         <label for="badgeName">Badge name : </label>
         <select name="badge" id="badgeName">
         <?php
@@ -88,5 +88,71 @@ if (isAdmin()) {
         </select>
         <button type="submit">Submit</button>
     </form>
+    <main class="wrapper">
     <?php
+      $badges = getBadges();
+      while ($badge = $badges->fetch()) {
+        ?>
+          <article class="badge <?= $badge['color']; ?>">
+            <div class="rounded"><?= $badge['fontawesome']; ?></div>
+          </article>
+        <?php
+      }
+    ?>
+
+    <!-- <article class="badge orange">
+      <div class="rounded"><i class="fab fa-html5"></i></div>
+    </article>
+    <article class="badge blue">
+      <div class="rounded"><i class="fab fa-css3-alt"></i></div>
+    </article>
+    <article class="badge gold">
+      <div class="rounded"><i class="fab fa-js-square"></i></div>
+    </article>
+    <article class="badge red">
+      <div class="rounded"><i class="fab fa-adobe"></i></div>
+    </article>
+    <article class="badge purple">
+      <div class="rounded"><i class="fab fa-php"></i></div>
+    </article>
+    <article class="badge green">
+      <div class="rounded"><i class="fab fa-node"></i></div>
+    </article>
+    <article class="badge crimson">
+      <div class="rounded"><i class="fab fa-npm"></i></div>
+    </article>
+    <article class="badge steel">
+      <div class="rounded"><i class="fab fa-python"></i></div>
+    </article>
+    <article class="badge pink">
+      <div class="rounded"><i class="fab fa-sass"></i></div>
+    </article>
+    <article class="badge rebecca">
+      <div class="rounded"><i class="fab fa-bootstrap"></i></div>
+    </article>
+    <article class="badge gainsboro">
+      <div class="rounded"><i class="fab fa-java"></i></div>
+    </article> -->
+  </main> 
+<?php 
 }
+?>
+<script>
+const addBadgeBtn = document.querySelector('#addBadge')
+const addBadgeForm = document.querySelector('#addBadgeForm')
+addBadgeBtn.addEventListener('click', () => {
+  addBadgeForm.classList.toggle("none")
+})
+
+const editBadgeBtn = document.querySelector('#editBadge')
+const editBadgeForm = document.querySelector('#editBadgeForm')
+editBadgeBtn.addEventListener('click', () => {
+  editBadgeForm.classList.toggle("none")
+})
+
+const removeBadgeBtn = document.querySelector('#removeBadge')
+const removeBadgeForm = document.querySelector('#removeBadgeForm')
+removeBadgeBtn.addEventListener('click', () => {
+  removeBadgeForm.classList.toggle("none")
+})
+</script>

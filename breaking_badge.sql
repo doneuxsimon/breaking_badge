@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : jeu. 21 jan. 2021 à 16:03
+-- Généré le : ven. 22 jan. 2021 à 13:28
 -- Version du serveur :  5.7.32
 -- Version de PHP : 8.0.0
 
@@ -30,18 +30,20 @@ CREATE TABLE `badges` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(200) COLLATE utf8mb4_bin NOT NULL,
   `description` text COLLATE utf8mb4_bin NOT NULL,
-  `shape` text COLLATE utf8mb4_bin NOT NULL
+  `color` enum('blue','orange','gold','red','purple','green','crimson','steel','pink','rebecca','gainsboro') COLLATE utf8mb4_bin NOT NULL,
+  `fontawesome` varchar(255) COLLATE utf8mb4_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Déchargement des données de la table `badges`
 --
 
-INSERT INTO `badges` (`id`, `name`, `description`, `shape`) VALUES
-(1, 'JS', 'JS is life', 'Round'),
-(2, 'HTML', 'Hypertext Markup Language', 'Triangle'),
-(3, 'PHP', 'Php is good!', 'Round'),
-(18, 'CSS', 'Vive le CSS !!!', 'Ellipse');
+INSERT INTO `badges` (`id`, `name`, `description`, `color`, `fontawesome`) VALUES
+(1, 'JS', 'JS is life', 'red', '<i class=\"fab fa-js-square\"></i>'),
+(2, 'HTML', 'Hypertext Markup Language', 'red', '<i class=\"fab fa-html5\"></i>'),
+(3, 'PHP', 'Php is good!', 'red', '<i class=\"fab fa-php\"></i>'),
+(18, 'CSS', 'Vive le CSS !!!', 'red', '<i class=\"fab fa-css3-alt\"></i>'),
+(19, 'Java', 'Java java java', 'red', '<i class=\"fab fa-java\"></i>');
 
 -- --------------------------------------------------------
 
@@ -115,7 +117,15 @@ INSERT INTO `users_has_badges` (`id`, `fk_users_id`, `fk_badges_id`, `fk_levels_
 (1, 2, 2, 1),
 (4, 9, 1, 1),
 (7, 2, 1, 1),
-(8, 9, 1, 4);
+(8, 9, 1, 4),
+(9, 11, 18, 1),
+(10, 11, 1, 2),
+(11, 12, 3, 2),
+(12, 14, 1, 2),
+(13, 15, 19, 2),
+(14, 9, 19, 4),
+(15, 16, 3, 4),
+(16, 11, 3, 3);
 
 --
 -- Index pour les tables déchargées
@@ -158,7 +168,7 @@ ALTER TABLE `users_has_badges`
 -- AUTO_INCREMENT pour la table `badges`
 --
 ALTER TABLE `badges`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT pour la table `levels`
@@ -176,7 +186,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `users_has_badges`
 --
 ALTER TABLE `users_has_badges`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Contraintes pour les tables déchargées
