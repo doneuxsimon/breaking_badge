@@ -40,7 +40,6 @@
         $_SESSION['firstname'] = $results['firstname'];
         $_SESSION['account_type'] = $results['account_type'];
         $_SESSION['email'] = $email;
-
         return "PwdOk";
       }
     }
