@@ -66,6 +66,15 @@
     return $students;
   }
 
+  function getStudentById($userId) {
+    $db = createCursor();
+    $student = $db->prepare('SELECT id,firstname, lastname, mail FROM users WHERE account_type = "NORMIE" AND id = ?');
+    $student->execute([ $userId ]);
+    $result = $student->fetch();
+
+    return $result;
+  }
+
   function addUsers($firstname, $lastname, $mail, $account, $pwd = "breaking") {
     $pwd = password_hash($pwd, PASSWORD_DEFAULT);
     $db = createCursor();
@@ -98,27 +107,31 @@
 
   function getBadges(){
     $db = createCursor();
-    $badges = $db->query('SELECT b.id, b.name, b.description, b.shape, ANY_VALUE(l.level) FROM badges AS b 
-    INNER JOIN users_has_badges ON b.id = users_has_badges.fk_badges_id 
-      INNER JOIN levels AS l
-      ON l.id = users_has_badges.fk_levels_id
-      GROUP BY b.id');
+    $badges = $db->query('SELECT id, name, description, color, fontawesome FROM badges GROUP BY id');
 
     return $badges;
   }
 
-  function getBadgesByName() {
+  function getBadgeById($badgeId) {
     $db = createCursor();
-    $badges = $db->query('SELECT name, description, shape FROM badges GROUP BY id');
+    $req = $db->prepare('SELECT id, name, description, color, fontawesome FROM badges WHERE id = ?');
+    $req->execute([ $badgeId ]);
+    $badge = $req->fetch();
+
+    return $badge;
+  }
+
+  function getBadgesByName() { // Why ?
+    $db = createCursor();
+    $badges = $db->query('SELECT name, description, color, fontawesome FROM badges GROUP BY id');
 
     return $badges;
   }
 
   function getBadgesByUser($userId) {
     $db = createCursor();
-    $badgesUser = $db->prepare('SELECT b.name AS badge, b.description AS description, b.shape AS shape,
-    users.firstname AS firstname, users.lastname AS lastname, l.level AS level
-    FROM badges AS b
+    $badgesUser = $db->prepare('SELECT b.id AS badgeId, b.name AS badge, b.description AS description, b.color AS color, b.fontawesome AS fontawesome,
+    users.firstname AS firstname, users.lastname AS lastname, l.level AS level FROM badges AS b
     INNER JOIN users_has_badges
     ON b.id = users_has_badges.fk_badges_id
       INNER JOIN users
@@ -131,25 +144,30 @@
     return $badgesUser;
   }
 
-  function createBadge($name, $description, $shape){
+  function createBadge($name, $description, $color, $fontawesome){
     $db = createCursor();
-    $req = $db->prepare('INSERT INTO badges(name, description, shape) VALUES(?, ?, ?)');
-    $affectedLines = $req->execute([
-      $name,
-      $description,
-      $shape
-    ]);
+    try {
+      $req = $db->prepare('INSERT INTO badges(name, description, color, fontawesome) VALUES(?, ?, ?, ?)');
+      $affectedLines = $req->execute([
+        $name,
+        $description,
+        $color,
+        $fontawesome
+      ]);
+      return $affectedLines;
+    } catch (Exception $e) {
+      echo "This badge already exists !";
+    }
 
-    return $affectedLines;
   }
 
-  function editBadge($badge_id, $name, $description, $shape){
+  function editBadge($badge_id, $description, $color, $fontawesome){
     $db = createCursor();
-    $req = $db->prepare('UPDATE badges SET name = ?, description = ?, shape = ? WHERE id = ?');
+    $req = $db->prepare('UPDATE badges SET description = ?, color = ?, fontawesome = ? WHERE id = ?');
     $affectedLines = $req->execute([
-      $name,
       $description,
-      $shape,
+      $color,
+      $fontawesome,
       $badge_id
     ]);
 
@@ -177,7 +195,6 @@
     ]);
 
     return $affectedLines;
-
   }
 
   function removeBadgeFromUser($badge_id, $user_id){
@@ -190,4 +207,55 @@
 
     return $affectedLines;
   }
+
+  function getLevels() {
+    $db = createCursor();
+    $levels = $req = $db->query('SELECT id, level FROM levels');
+
+    return $levels;
+  }
+
+  function averageBadge($badgeId) {
+    $db = createCursor();
+    $req = $db->prepare('SELECT COUNT(fk_badges_id) AS count FROM users_has_badges WHERE fk_badges_id = ?');
+    $req->execute([ $badgeId ]);
+    $data = $req->fetch();
+    $countBadge = $data['count'];
+    $req->closeCursor();
+
+    $req = $db->query('SELECT COUNT(id) AS user FROM users WHERE account_type = "NORMIE"');
+    $data = $req->fetch();
+    $countUsers = $data['user'];
+    $average = ($countBadge / $countUsers) * 100;
+
+    return $average;
+}
+
+function averageLevelByBadge($badgeId, $levelId) {
+  $db = createCursor();
+  $req = $db->prepare('SELECT COUNT(fk_badges_id) AS count FROM users_has_badges WHERE fk_badges_id = ?');
+  $req->execute([ $badgeId ]);
+  $data = $req->fetch();
+  $countBadge = $data['count'];
+  $req->closeCursor();
+  
+  $req = $db->prepare('SELECT COUNT(fk_levels_id) AS count, b.name AS badge FROM users_has_badges
+  INNER JOIN badges AS b ON b.id = users_has_badges.fk_badges_id WHERE b.id = ? AND fk_levels_id = ?');
+  $req->execute([ $badgeId, $levelId ]);
+  $result = $req->fetch();
+  $countLevel = $result['count'];
+
+  $statLevel = ($countLevel / $countBadge) * 100;
+  return $statLevel;
+}
+
+function generateBarres($x, $x1, $x2, $x3, $x4) {
+
+  return '<div class="barreContainer" style="height: ' . $x . '%;">
+  <div class="barre4" style="height: ' . $x4 . '%; width: 50px;"></div>
+  <div class="barre3" style="height: ' . $x3 . '%; width: 50px;"></div>
+  <div class="barre2" style="height: ' . $x2 . '%; width: 50px;"></div>
+  <div class="barre1" style="height: ' . $x1 . '%; width: 50px;"></div>
+</div>';
+}
 ?>
