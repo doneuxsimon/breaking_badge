@@ -8,6 +8,3 @@ while ($user = $users->fetch()) {
     echo "</pre>";
 }
 ?>
-<div class="studentsFlex">
-
-</div>
