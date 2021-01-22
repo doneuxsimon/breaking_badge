@@ -6,7 +6,7 @@ if (isAdmin()) {
     echo "All badges : <br>";
     $badges = getBadges();
     while ($badge = $badges->fetch()) {
-        echo $badge['name'] . " : " . $badge['description'] . " " . $badge['shape'] . "<br>";
+        echo $badge['name'] . " : " . $badge['description'] . " " . $badge['color'] . "<br>";
     }
     $users = getStudents();
     ?>
@@ -42,8 +42,10 @@ if (isAdmin()) {
         <input type="text" id="badgeName" name="badgeName">
         <label for="badgeDescription">Badge description : </label>
         <input type="text" id="badgeDescription" name="badgeDescription">
-        <label for="badgeShape">Badge shape : </label>
-        <input type="text" id="badgeShape" name="badgeShape">
+        <label for="badgeColor">Badge color : </label>
+        <input type="text" id="badgeColor" name="badgeColor">
+        <label for="fontawesome">Fontawesome classes : </label>
+        <input type="text" id="fontawesome" name="fontawesome">
         <button type="submit">Submit</button>
     </form>
     <?php
@@ -63,8 +65,10 @@ if (isAdmin()) {
         </select>
         <label for="badgeDescription">Badge description : </label>
         <input type="text" id="badgeDescription" name="badgeDescription">
-        <label for="badgeShape">Badge shape : </label>
-        <input type="text" id="badgeShape" name="badgeShape">
+        <label for="badgeColor">Badge color : </label>
+        <input type="text" id="badgeColor" name="badgeColor">
+        <label for="fontawesome">Fontawesome classes : </label>
+        <input type="text" id="fontawesome" name="fontawesome">
         <button type="submit">Submit</button>
     </form>
     <?php

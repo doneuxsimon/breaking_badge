@@ -107,14 +107,14 @@
 
   function getBadges(){
     $db = createCursor();
-    $badges = $db->query('SELECT id, name, description, shape FROM badges GROUP BY id');
+    $badges = $db->query('SELECT id, name, description, color, fontawesome FROM badges GROUP BY id');
 
     return $badges;
   }
 
   function getBadgeById($badgeId) {
     $db = createCursor();
-    $req = $db->prepare('SELECT id, name, description, shape FROM badges WHERE id = ?');
+    $req = $db->prepare('SELECT id, name, description, color, fontawesome FROM badges WHERE id = ?');
     $req->execute([ $badgeId ]);
     $badge = $req->fetch();
 
@@ -123,16 +123,15 @@
 
   function getBadgesByName() { // Why ?
     $db = createCursor();
-    $badges = $db->query('SELECT name, description, shape FROM badges GROUP BY id');
+    $badges = $db->query('SELECT name, description, color, fontawesome FROM badges GROUP BY id');
 
     return $badges;
   }
 
   function getBadgesByUser($userId) {
     $db = createCursor();
-    $badgesUser = $db->prepare('SELECT b.id AS badgeId, b.name AS badge, b.description AS description, b.shape AS shape,
-    users.firstname AS firstname, users.lastname AS lastname, l.level AS level
-    FROM badges AS b
+    $badgesUser = $db->prepare('SELECT b.id AS badgeId, b.name AS badge, b.description AS description, b.color AS color, b.fontawesome AS fontawesome,
+    users.firstname AS firstname, users.lastname AS lastname, l.level AS level FROM badges AS b
     INNER JOIN users_has_badges
     ON b.id = users_has_badges.fk_badges_id
       INNER JOIN users
@@ -145,14 +144,15 @@
     return $badgesUser;
   }
 
-  function createBadge($name, $description, $shape){
+  function createBadge($name, $description, $color, $fontawesome){
     $db = createCursor();
     try {
-      $req = $db->prepare('INSERT INTO badges(name, description, shape) VALUES(?, ?, ?)');
+      $req = $db->prepare('INSERT INTO badges(name, description, color, fontawesome) VALUES(?, ?, ?, ?)');
       $affectedLines = $req->execute([
         $name,
         $description,
-        $shape
+        $color,
+        $fontawesome
       ]);
       return $affectedLines;
     } catch (Exception $e) {
@@ -161,12 +161,13 @@
 
   }
 
-  function editBadge($badge_id, $description, $shape){
+  function editBadge($badge_id, $description, $color, $fontawesome){
     $db = createCursor();
-    $req = $db->prepare('UPDATE badges SET description = ?, shape = ? WHERE id = ?');
+    $req = $db->prepare('UPDATE badges SET description = ?, color = ?, fontawesome = ? WHERE id = ?');
     $affectedLines = $req->execute([
       $description,
-      $shape,
+      $color,
+      $fontawesome,
       $badge_id
     ]);
 
@@ -228,5 +229,33 @@
     $average = ($countBadge / $countUsers) * 100;
 
     return $average;
+}
+
+function averageLevelByBadge($badgeId, $levelId) {
+  $db = createCursor();
+  $req = $db->prepare('SELECT COUNT(fk_badges_id) AS count FROM users_has_badges WHERE fk_badges_id = ?');
+  $req->execute([ $badgeId ]);
+  $data = $req->fetch();
+  $countBadge = $data['count'];
+  $req->closeCursor();
+  
+  $req = $db->prepare('SELECT COUNT(fk_levels_id) AS count, b.name AS badge FROM users_has_badges
+  INNER JOIN badges AS b ON b.id = users_has_badges.fk_badges_id WHERE b.id = ? AND fk_levels_id = ?');
+  $req->execute([ $badgeId, $levelId ]);
+  $result = $req->fetch();
+  $countLevel = $result['count'];
+
+  $statLevel = ($countLevel / $countBadge) * 100;
+  return $statLevel;
+}
+
+function generateBarres($x, $x1, $x2, $x3, $x4) {
+
+  return '<div class="barreContainer" style="height: ' . $x . '%;">
+  <div class="barre4" style="height: ' . $x4 . '%; width: 50px;"></div>
+  <div class="barre3" style="height: ' . $x3 . '%; width: 50px;"></div>
+  <div class="barre2" style="height: ' . $x2 . '%; width: 50px;"></div>
+  <div class="barre1" style="height: ' . $x1 . '%; width: 50px;"></div>
+</div>';
 }
 ?>
