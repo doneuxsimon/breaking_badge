@@ -43,7 +43,20 @@ if (isAdmin()) {
         <label for="badgeDescription">Badge description : </label>
         <input type="text" id="badgeDescription" name="badgeDescription">
         <label for="badgeColor">Badge color : </label>
-        <input type="text" id="badgeColor" name="badgeColor">
+        <select id="badgeColor" name="badgeColor">
+            <option>...</option>
+            <option value="blue">Blue</option>
+            <option value="orange">Orange</option>
+            <option value="gold">Gold</option>
+            <option value="red">Red</option>
+            <option value="purple">Purple</option>
+            <option value="green">Green</option>
+            <option value="crimson">Crimson</option>
+            <option value="steel">Steel</option>
+            <option value="pink">Pink</option>
+            <option value="rebecca">Rebecca</option>
+            <option value="gainsboro">Gainsboro</option>
+        </select>
         <label for="fontawesome">Fontawesome classes : </label>
         <input type="text" id="fontawesome" name="fontawesome">
         <button type="submit">Submit</button>
@@ -66,7 +79,20 @@ if (isAdmin()) {
         <label for="badgeDescription">Badge description : </label>
         <input type="text" id="badgeDescription" name="badgeDescription">
         <label for="badgeColor">Badge color : </label>
-        <input type="text" id="badgeColor" name="badgeColor">
+        <select id="badgeColor" name="badgeColor">
+            <option>...</option>
+            <option value="blue">Blue</option>
+            <option value="orange">Orange</option>
+            <option value="gold">Gold</option>
+            <option value="red">Red</option>
+            <option value="purple">Purple</option>
+            <option value="green">Green</option>
+            <option value="crimson">Crimson</option>
+            <option value="steel">Steel</option>
+            <option value="pink">Pink</option>
+            <option value="rebecca">Rebecca</option>
+            <option value="gainsboro">Gainsboro</option>
+        </select>
         <label for="fontawesome">Fontawesome classes : </label>
         <input type="text" id="fontawesome" name="fontawesome">
         <button type="submit">Submit</button>
