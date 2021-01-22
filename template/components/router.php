@@ -37,5 +37,6 @@
     }
     else {
       include_once('navbar.php');
+      echo "BONJOUR";
     }
   }
