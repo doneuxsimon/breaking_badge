@@ -26,6 +26,6 @@
             <option value="ADMIN">ADMIN</option>
         </select>
     </p>
-    <button type="submit"> Sign In ! </button>
+    <button class="log" type="submit"> Sign In ! </button>
 </form>
 </div>

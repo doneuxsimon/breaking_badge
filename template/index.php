@@ -11,7 +11,9 @@
   <link rel="stylesheet" href="assets/style.css">
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Texturina:wght@500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&display=swap" rel="stylesheet">
   <title>Breaking Badge</title>
 </head>
 <body>
